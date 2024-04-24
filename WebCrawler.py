@@ -118,6 +118,8 @@ def validate_and_get_input():
 
     if (len(sys.argv) > 2) and (sys.argv[2].isdigit()):
         max_depth = int(sys.argv[2])
+    else:
+        print("No depth was chosen, default depth = 3")
 
     return sys.argv[1], max_depth
 
