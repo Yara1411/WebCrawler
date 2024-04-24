@@ -10,8 +10,8 @@ import validators
 import hashlib
 
 class WebCrawler:
-    def __init__(self, root_url):
-        self.max_depth = 3 
+    def __init__(self, root_url, max_depth = 3):
+        self.max_depth = max_depth
         self.visited = set()
         self.to_visit = Queue()
         self.to_visit.put((root_url, 0))
@@ -92,7 +92,7 @@ class WebCrawler:
         return self.links_info, self.broken_links, self.duplicate_images
 
 
-def write_result_to_file(links_info, broken_links, duplicate_images, file_name="output1.txt", file_dup="duplicate_images1.txt"):
+def write_result_to_file(links_info, broken_links, duplicate_images, file_name="output.txt", file_dup="duplicate_images.txt"):
     with open(file_name, "w") as file:
         file.write("============= Links and Depths =============\n")
         for link, depth in links_info.items(): 
@@ -110,16 +110,20 @@ def write_result_to_file(links_info, broken_links, duplicate_images, file_name="
 
 
 def validate_and_get_input():
-    if (len(sys.argv) - 1 != 1 or not validators.url(sys.argv[1])):
+    if (len(sys.argv) < 2 or not validators.url(sys.argv[1])):
         print("Invalid URL input")
-        exit(0)
-    return sys.argv[1]
+        sys.exit(0)
+
+    max_depth = 3
+
+    if (len(sys.argv) > 2) and (sys.argv[2].isdigit()):
+        max_depth = int(sys.argv[2])
+
+    return sys.argv[1], max_depth
 
 
 if __name__ == "__main__":
-    root_url = validate_and_get_input()
-
-    crawler = WebCrawler(root_url)
+    root_url, max_depth = validate_and_get_input()
+    crawler = WebCrawler(root_url, max_depth)
     links_info, broken_links, duplicate_images = crawler.crawl()
-    
     write_result_to_file(links_info, broken_links, duplicate_images)
