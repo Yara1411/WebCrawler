@@ -28,7 +28,7 @@ Ensure you have Python and Git installed on your computer:
 2. Navigate to the project directory:
    cd path/to/WebCrawler
 
-## Installation
+## Installation (Linux)
 
 Install virtualenv and create a virtual environment:
 
@@ -41,9 +41,8 @@ Install the required dependencies: pip install -r requirements.txt
 ## Running the program
 
 To run the Web Crawler, use the following command:
-python3 WebCrawler.py https://website.com depth
+python3 WebCrawler.py https://website.com maximum_depth (optional)
 
 ## Requirements
 
 - Python 3.6 or higher
-- Compatible with MacOS, Linux, and Windows operating systems.
